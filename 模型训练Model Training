@@ -1,0 +1,25 @@
+# 7. 模型训练（≥5种模型） Model Training (≥5 models)
+#  Group member 3 model training 组员 3 模型训练
+print("\n" + "="*60)
+print("【Step 4: Model Training & Evaluation】") #第四步：模型训练与评估
+
+models = {
+    "Logistic Regression": LogisticRegression(random_state=42, max_iter=1000),
+    "Decision Tree": DecisionTreeClassifier(random_state=42),
+    "Random Forest": RandomForestClassifier(random_state=42, n_estimators=100),
+    "SVM": SVC(random_state=42),
+    "KNN": KNeighborsClassifier(),
+    "Gradient Boosting": GradientBoostingClassifier(random_state=42)
+}
+
+model_results = {}
+
+for name, model in models.items():
+    print(f"\nTraining {name}...")
+    model.fit(X_train, y_train)
+    y_pred = model.predict(X_test)
+    acc = accuracy_score(y_test, y_pred)
+    model_results[name] = acc
+    print(f"{name} Accuracy: {acc:.4f}")
+    print("Classification Report:")
+    print(classification_report(y_test, y_pred))
