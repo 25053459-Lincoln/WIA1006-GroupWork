@@ -1,0 +1,63 @@
+from google.colab import files
+import zipfile
+import pandas as pd
+import os
+
+# 上传 ZIP 文件 Upload a ZIP file
+print("Please upload your archive.zip file:")
+uploaded = files.upload()
+zip_filename = next(iter(uploaded.keys()))
+
+# 解压 ZIP 文件 Extract the ZIP file
+with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
+    zip_ref.extractall('/content/')
+print("Extraction completed!")
+
+# 自动识别并读取主数据集 Automatically identify and read the main dataset
+csv_files = [f for f in os.listdir('/content/') if f.endswith('.csv')]
+
+# 选文件最大的那个作为主数据集 Select the largest file as the main dataset 
+main_csv = max(csv_files, key=lambda x: os.path.getsize(f"/content/{x}"))
+df = pd.read_csv(f"/content/{main_csv}")
+
+print(f"\nSuccessfully loaded main dataset: {main_csv}")
+print("Data shape:", df.shape)
+display(df.head())
+
+--------------------------------------------------------
+# WIA1006 Machine Learning Group Assignment
+# Topic：Dating App User Behavior & Match Outcome Prediction
+# Dataset: dating_app_behavior_dataset_extended1.csv
+# Member 1：Import Libraries + load data 导入库 + 加载数据
+
+# 1. 导入库与环境配置 Import Libraries & Environment Setup
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import warnings
+warnings.filterwarnings('ignore')
+
+# 建模相关库 Modeling-related Libraries
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import LabelEncoder, StandardScaler
+from sklearn.impute import SimpleImputer
+from sklearn.linear_model import LogisticRegression
+from sklearn.tree import DecisionTreeClassifier
+from sklearn.ensemble import RandomForestClassifier, GradientBoostingClassifier
+from sklearn.svm import SVC
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.metrics import accuracy_score, classification_report, confusion_matrix
+
+# 2. 数据加载 Data Loading 
+
+print("="*60)
+print("【Raw Data Basic Information】") #原始数据基本信息
+print("Data Shape:", df.shape)
+print("\nFirst 5 Rows of Data:")
+print(df.head())
+print("\nData Types:")
+print(df.dtypes)
+print("\nMissing Values Count:")
+print(df.isnull().sum())
