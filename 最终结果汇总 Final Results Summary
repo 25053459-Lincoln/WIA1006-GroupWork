@@ -1,0 +1,11 @@
+# 9. 最终结果汇总 Final Results Summary
+# Team member 5(results summary output)  组员 5（结果汇总输出）
+
+print("\n" + "="*60)
+print("【Final Model Performance Summary】")
+results_df = pd.DataFrame(list(model_results.items()), columns=['Model', 'Accuracy'])
+print(results_df.sort_values('Accuracy', ascending=False))
+
+print("\n Assignment code execution completed!")                            
+print("Completed: Data Cleaning + EDA Visualization + Feature Engineering + 6 Models Training & Comparison") # 已完成：数据清洗 + EDA可视化 + 特征工程 + 6种模型训练与对比
+print("Generated charts have been saved in the current directory and can be directly inserted into the report.") #生成的图表已保存在当前目录，可直接插入报告使用
