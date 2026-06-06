@@ -1,0 +1,25 @@
+from google.colab import files
+import zipfile
+import pandas as pd
+import os
+
+# 上传 ZIP 文件
+print("Please upload your archive.zip file:")
+uploaded = files.upload()
+zip_filename = next(iter(uploaded.keys()))
+
+# 解压 ZIP 文件
+with zipfile.ZipFile(zip_filename, 'r') as zip_ref:
+    zip_ref.extractall('/content/')
+print("Extraction completed!")
+
+# 找出所有的 CSV 文件
+csv_files = [f for f in os.listdir('/content/') if f.endswith('.csv')]
+print("解压出来的CSV文件有:", csv_files)
+
+# 核心修改：选文件【最小】的那个（原版），或者你可以直接写死文件名
+main_csv = min(csv_files, key=lambda x: os.path.getsize(f"/content/{x}"))
+df = pd.read_csv(f"/content/{main_csv}")
+
+print(f"\nSuccessfully loaded main dataset: {main_csv}")
+print("Data shape:", df.shape) # 这里应该输出 (50000, 19) 才对！
